@@ -5,6 +5,9 @@ from django.db import models
 class CurrentBalance(models.Model):
     current_balance = models.FloatField(default=0)
     
+    def __str__(self) -> str:
+        return str(self.current_balance)
+    
 
 
 class TrackingHistory(models.Model):

@@ -7,6 +7,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('tracker.urls')),
+    # path('jet/', include('jet.urls', 'jet')),
 ]
 
 if settings.DEBUG:

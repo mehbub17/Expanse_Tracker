@@ -19,3 +19,9 @@ class TrackingHistory(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     
     
+
+class requestsLogs(models.Model):
+    request_info = models.TextField()
+    request_type = models.CharField(max_length=100)
+    request_method = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)

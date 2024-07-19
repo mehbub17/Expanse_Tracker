@@ -9,10 +9,10 @@ class RequstLogging:
         
     def __call__ (self,request):
         request_info = request
-        print(vars(request_info))
-        print(self.get_response(request))
+        # print(vars(request_info))
+        # print(self.get_response(request))
         
-        requestsLogs.objects.get(
+        requestsLogs.objects.create(
             request_info = vars(request_info),
             request_type = request_info.method,
             request_method = request_info.path,

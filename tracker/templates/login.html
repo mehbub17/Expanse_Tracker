@@ -1,0 +1,53 @@
+{% extends "base.html" %} {%block start%}
+
+<div style="margin-top: -70px;!importent">
+  <h3>Login Page</h3>
+
+  {% comment %} {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %} {% endcomment %}
+
+  {% if messages %}
+  <script type="text/javascript">
+    window.onload = function() {
+      {% for message in messages %}
+        alert("{{ message }}");
+      {% endfor %}
+    }
+  </script>
+{% endif %}
+
+
+  <form method="POST" id="form">
+    {% csrf_token %}
+    <div class="form-control">
+      <label for="text">username</label>
+
+      <input
+        name="username"
+        type="text"
+        id="username"
+        placeholder="enter username"
+      />
+      <small>enter unique user name!</small>
+    </div>
+    <div class="form-control">
+      <label for="password">password <br /> </label>
+      <br>
+      <input
+        name="password"
+        type="text"
+        id="password"
+        placeholder="enter password..."
+      />
+    </div>
+    <p>Do not have an account<a href="{% url 'register-view' %}">  Register</a></p>
+    <button class="btn" type="submit">Login</button>
+  </form>
+</div>
+
+{%endblock%}

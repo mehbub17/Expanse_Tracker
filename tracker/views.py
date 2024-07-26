@@ -1,6 +1,9 @@
 from django.shortcuts import render,redirect
 from .models import TrackingHistory,CurrentBalance
 from django.db.models import Sum
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 
 
@@ -61,3 +64,52 @@ def delete_transaction(request,id):
     
     tracking_history.delete()
     return redirect('/')
+
+def login_view(request):
+    
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = User.objects.filter(username = username)
+        if not user.exists():
+            messages.success(request, "account not found")
+            return redirect("/login_page/")
+        user = authenticate(username=username,password=password)
+        
+        if not user:
+            messages.success(request,"Incorrect Password")
+            return redirect('/login_page/')
+        login(request,user)
+        return redirect('/')
+            
+    
+    return render(request,'login.html')
+
+
+def register_view(request):
+    
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        first_name = request.POST.get('fname')
+        last_name = request.POST.get('lname')
+        
+        user = User.objects.filter(username = username)
+        
+        if user.exists():
+            messages.success(request,"Username is already taken")
+            return redirect("/register_page/")
+
+        user = User.objects.create(
+            username =username,
+            first_name=first_name,
+            last_name = last_name,
+            
+        )
+        user.set_password(password) #encrypts password
+        user.save()
+        messages.success(request,"account created")
+        return redirect("/register_page/")
+    
+    return render(request,'register.html')

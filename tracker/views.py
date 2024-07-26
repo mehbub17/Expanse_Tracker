@@ -3,10 +3,12 @@ from .models import TrackingHistory,CurrentBalance
 from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
+
+from django.contrib.auth.decorators import login_required
 
 
-
+@login_required(login_url="login-view")
 def index(request):
     
     if request.method == "POST":
@@ -86,6 +88,11 @@ def login_view(request):
     
     return render(request,'login.html')
 
+
+def logout_view(request):
+    logout(request)
+    return redirect('/login_page/')
+    
 
 def register_view(request):
     
